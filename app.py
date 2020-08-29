@@ -26,7 +26,7 @@ aqi_fig.add_trace(go.Scatter( x=list(aqi_2020["month"]), y=list(aqi_2020[" AQI V
 aqi_fig.add_trace(go.Scatter( x=list(aqi_2019["month"]), y=list(aqi_2019[" AQI Value"]),mode="lines",name="2019"))
 
 aqi_fig.update_layout(
-    title="Air Quality Index till 8/28",
+    title="Air Quality Index till 8/28 for Cook County",
     shapes=[
         # Phase 1 & 2
         dict(
@@ -59,23 +59,8 @@ aqi_fig.update_layout(
             opacity=0.5,
             layer="below",
             line_width=0,
-        ),
-         # Phase 4
-        dict(
-            type="rect",
-            # x-reference is assigned to the x-values
-            xref="x",
-            # y-reference is assigned to the plot paper [0,1]
-            yref="paper",
-            x0="6/24",
-            y0=0,
-            x1="8/29",
-            y1=1,
-            fillcolor="lightgreen",
-            opacity=0.5,
-            layer="below",
-            line_width=0,
         )
+        
     ]
 )
 #Pie Charts
