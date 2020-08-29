@@ -6,10 +6,11 @@ import pandas as pd
 import requests
 import plotly.graph_objects as go
 import numpy as np
+import json
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__,external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__,external_stylesheets=external_stylesheets,title='Head With Data - Team Outliers')
 server = app.server
 
 #Oil Data Prep
@@ -34,6 +35,12 @@ fig.add_trace(go.Scatter(x=random_x, y=random_y1,
                     mode='lines',
                     name='WTI Oil Price'))
 
+air_traffic = requests.get('https://raw.githubusercontent.com/kaushikprasanth/head_with_data_outliers_data/master/Air_Traffic_Passenger_Statistics.json')
+_df_air_traffic=pd.DataFrame(json.loads(air_traffic.json()))
+_df_air_traffic['Activity Period'] = pd.to_datetime((_df_air_traffic['Activity Period']), format='%Y%m')
+air_traffic_plot = px.line(_df_air_traffic, x="Activity Period",  y="Passenger Count", color='GEO Summary',
+        title="Domestic and International Air Traffic Passenger Count")
+
 app.layout = html.Div(children=[
     html.H1(children='Head With Data - Team Outliers'),
 
@@ -42,6 +49,10 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='example-graph',
         figure=fig
+    ),
+       dcc.Graph(
+        id='air-traffic-graph',
+        figure=air_traffic_plot
     )
 ])
 
