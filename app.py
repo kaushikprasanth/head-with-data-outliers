@@ -39,7 +39,7 @@ aqi_fig.update_layout(
             y0=0,
             x1="6/3",
             y1=1,
-            fillcolor="red",
+            fillcolor="orange",
             opacity=0.5,
             layer="below",
             line_width=0,
@@ -55,7 +55,7 @@ aqi_fig.update_layout(
             y0=0,
             x1="6/24",
             y1=1,
-            fillcolor="#FFFFE0",
+            fillcolor="yellow",
             opacity=0.5,
             layer="below",
             line_width=0,
@@ -63,11 +63,21 @@ aqi_fig.update_layout(
         
     ]
 )
+color_discrete_map={'Good':'#32CD32','Moderate':'#FFFF66','Unhealthy for sensitive groups':'#FF8C00','Unhealthy':'#FF4500'}
 #Pie Charts
-fig_2019 = px.pie(aqi_2019['AQI Category'].value_counts().reset_index(), values='AQI Category', names='index')
+fig_2019 = px.pie(aqi_2019['AQI Category'].value_counts().reset_index(), 
+                values='AQI Category', names='index',
+                color='index',
+                color_discrete_map=color_discrete_map
+                )
 df_2020_cat = aqi_2020['AQI Category'].value_counts().reset_index()
 df_2020_cat = df_2020_cat[df_2020_cat['index'] != '0']
-fig_2020 = px.pie(df_2020_cat, values='AQI Category', names='index')
+fig_2020 = px.pie(df_2020_cat, 
+                    values='AQI Category', 
+                    names='index',
+                    color='index',
+                    color_discrete_map=color_discrete_map
+                    )
 
 #Oil Data Prep
 brent = requests.get('https://pkgstore.datahub.io/core/oil-prices/brent-daily_json/data/11a834b4b126dcc4601b562966cadf3a/brent-daily_json.json')
